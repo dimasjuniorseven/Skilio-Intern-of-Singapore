@@ -5,7 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = 8000;
 
 // Middleware
 app.use(express.json());
@@ -41,6 +41,15 @@ db.serialize(() => {
     item_name TEXT,
     quantity INTEGER,
     description TEXT
+  )`);
+
+  db.run(`CREATE TABLE IF NOT EXISTS borrowings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id INTEGER,
+    borrower_name TEXT,
+    quantity INTEGER,
+    borrow_date TEXT DEFAULT (datetime('now')),
+    FOREIGN KEY(item_id) REFERENCES logistics(id)
   )`);
 });
 
@@ -132,6 +141,32 @@ app.delete('/logistics/:id', isAuthenticated, (req, res) => {
     if (err) return res.status(500).json({ message: 'Server error' });
     if (this.changes === 0) return res.status(404).json({ message: 'Item not found' });
     res.json({ message: 'Item deleted' });
+  });
+});
+
+  
+// Borrow equipment endpoint
+app.post('/borrow', (req, res) => {
+  const { item_id, borrower_name, quantity } = req.body;
+  if (!item_id || !borrower_name || !quantity) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+  // Check if enough quantity available
+  db.get('SELECT quantity FROM logistics WHERE id = ?', [item_id], (err, row) => {
+    if (err) return res.status(500).json({ message: 'Server error' });
+    if (!row) return res.status(404).json({ message: 'Item not found' });
+    if (row.quantity < quantity) {
+      return res.status(400).json({ message: 'Not enough quantity available' });
+    }
+    // Insert borrowing record
+    db.run('INSERT INTO borrowings (item_id, borrower_name, quantity) VALUES (?, ?, ?)', [item_id, borrower_name, quantity], function(err) {
+      if (err) return res.status(500).json({ message: 'Server error' });
+      // Update logistics quantity
+      db.run('UPDATE logistics SET quantity = quantity - ? WHERE id = ?', [quantity, item_id], function(err) {
+        if (err) return res.status(500).json({ message: 'Server error' });
+        res.json({ message: 'Borrowing recorded successfully' });
+      });
+    });
   });
 });
 
