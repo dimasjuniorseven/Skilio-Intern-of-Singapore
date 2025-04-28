@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sistem Pengelolaan Logistik MAPALA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+      <h1 class="text-2xl font-bold mb-6 text-center">MAPALA Logistics Login</h1>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label for="username" class="block text-gray-700">Username</label>
+          <input type="text" id="username" name="username" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label for="password" class="block text-gray-700">Password</label>
+          <input type="password" id="password" name="password" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Login</button>
+      </form>
+      <button id="guestBtn" class="w-full mt-4 bg-gray-600 text-white py-2 rounded hover:bg-gray-700 transition">Login as Guest</button>
+      <p id="errorMsg" class="text-red-600 mt-4 text-center hidden"></p>
+      <p class="mt-4 text-center text-gray-600">
+        Don't have an account? <a href="/register.html" class="text-blue-600 hover:underline">Register here</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const guestBtn = document.getElementById('guestBtn');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.classList.add('hidden');
+      const formData = new FormData(loginForm);
+      const data = {
+        username: formData.get('username'),
+        password: formData.get('password')
+      };
+      try {
+        const res = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (res.ok) {
+          window.location.href = '/dashboard.html';
+        } else {
+          errorMsg.textContent = result.message || 'Login failed';
+          errorMsg.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Server error';
+        errorMsg.classList.remove('hidden');
+      }
+    });
+
+    guestBtn.addEventListener('click', () => {
+      window.location.href = '/dashboard.html?guest=true';
+    });
+  </script>
+</body>
+</html>
