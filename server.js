@@ -188,6 +188,21 @@ app.post('/borrow', (req, res) => {
   });
 });
 
+// New endpoint to get recent borrowings with item info
+app.get('/borrowings', isAuthenticated, (req, res) => {
+  const query = `
+    SELECT b.id, b.borrower_name, b.quantity, b.borrow_date, l.item_name
+    FROM borrowings b
+    JOIN logistics l ON b.item_id = l.id
+    ORDER BY b.borrow_date DESC
+    LIMIT 10
+  `;
+  db.all(query, [], (err, rows) => {
+    if (err) return res.status(500).json({ message: 'Server error' });
+    res.json(rows);
+  });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
