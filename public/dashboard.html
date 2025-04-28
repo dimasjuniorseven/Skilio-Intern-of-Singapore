@@ -114,7 +114,8 @@
   </header>
 
   <main>
-      <section class="mb-6" ${isGuest ? 'hidden' : ''}>
+      ${!isGuest ? `
+      <section class="mb-6 white-bg">
         <h2 class="text-xl font-semibold mb-4">Tambah / Ubah Data Logistik</h2>
         <form id="itemForm" class="space-y-4">
           <input type="hidden" id="itemId" />
@@ -134,8 +135,9 @@
           <button type="button" id="cancelBtn" class="btn-secondary">Batal</button>
         </form>
       </section>
+      ` : ''}
 
-    <section>
+    <section class="white-bg">
       <h2 class="text-xl font-semibold mb-4">Data Logistik</h2>
       <table>
         <thead>
@@ -143,15 +145,13 @@
             <th>Nama Barang</th>
             <th>Jumlah</th>
             <th>Deskripsi</th>
+            ${!isGuest ? '<th>Aksi</th>' : ''}
           </tr>
         </thead>
         <tbody id="itemsTableBody">
           <!-- Items will be populated here -->
         </tbody>
       </table>
-    </section>
-    <section class="mt-6">
-      <a href="borrow.html" class="btn-primary">Form Peminjaman Alat</a>
     </section>
   </main>
 
