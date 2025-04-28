@@ -8,14 +8,14 @@ To set up the Mapala Logistics CRUD application locally, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/mapala-logistics-crud.git
-   cd mapala-logistics-crud
+   git clone https://github.com/dimasjuniorseven/Skilio-Intern-of-Singapore.git
+   cd Skilio-Intern-of-Singapore
    ```
 
 2. **Install dependencies**:
    Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed. Then run:
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Set up the SQLite database**:
@@ -24,7 +24,7 @@ To set up the Mapala Logistics CRUD application locally, follow these steps:
 4. **Run the application**:
    To start the server, run:
    ```bash
-   npm start
+   pnpm start
    ```
    The server will be running on [http://localhost:3000](http://localhost:3000).
 
@@ -64,7 +64,7 @@ The project is organized as follows:
 mapala-logistics-crud/
 │
 ├── node_modules/           # Node.js modules (dependencies)
-├── public/                 # Static files (HTML, CSS, JS)
+├── public/                 # Static files (HTML, CSS, JS and Photos)
 ├── package.json            # Project metadata and dependencies
 ├── package-lock.json       # Dependency versions
 └── server.js               # Main server file
