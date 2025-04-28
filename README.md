@@ -1,4 +1,4 @@
-# Mapala Logistics CRUD
+# Skilio Intern CRUD with Node.js
 
 ## Project Overview
 Mapala Logistics CRUD is a simple web-based application designed for managing logistics data with user authentication. The app allows users to register, log in, and perform CRUD (Create, Read, Update, Delete) operations on logistics items such as product names, quantities, and descriptions. The application is built using Node.js, Express, and SQLite3, and it implements secure password storage using bcrypt.
