@@ -37,7 +37,10 @@
     td {
       background-color: #1e3a8a;
       padding: 0.75rem 1rem;
-      border<edit_file>
+      border: none;
+      border-radius: 0.375rem;
+    }
+  </style>
 <path>public/dashboard.html</path>
 <content>
 <<<<<<< SEARCH
@@ -113,7 +116,7 @@
     // Fetch and display logistics items
     async function fetchItems() {
       try {
-        const res = await fetch('/logistics');
+        const res = await fetch('/logistics', { credentials: 'include' });
         if (res.status === 401) {
           window.location.href = '/';
           return;
