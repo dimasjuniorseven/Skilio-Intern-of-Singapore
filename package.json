@@ -1,0 +1,15 @@
+{
+  "name": "mapala-logistics-crud",
+  "version": "1.0.0",
+  "description": "Web CRUD app with login for MAPALA logistics management",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "sqlite3": "^5.1.6"
+  }
+}
