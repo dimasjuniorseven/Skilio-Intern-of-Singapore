@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Form Peminjaman Alat - Sistem Logistik MAPALA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <header class="p-4 flex justify-between items-center bg-gray-900 text-white">
+    <h1 class="text-2xl font-bold">Form Peminjaman Alat - Sistem Logistik MAPALA</h1>
+    <a href="dashboard.html?guest=true" class="btn-primary">Kembali ke Dashboard</a>
+  </header>
+
+  <main>
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-4">Data Alat Tersedia</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nama Barang</th>
+            <th>Jumlah Tersedia</th>
+            <th>Deskripsi</th>
+          </tr>
+        </thead>
+        <tbody id="availableItemsBody">
+          <!-- Available items will be populated here -->
+        </tbody>
+      </table>
+    </section>
+
+    <section class="borrow-section">
+      <h2 class="text-xl font-semibold mb-4">Form Peminjaman Alat</h2>
+      <form id="borrowForm" class="space-y-4">
+        <div>
+          <label for="borrowerName" class="block mb-1">Nama Peminjam</label>
+          <input type="text" id="borrowerName" required />
+        </div>
+        <div>
+          <label for="borrowItem" class="block mb-1">Pilih Barang</label>
+          <select id="borrowItem" required>
+            <option value="">-- Pilih Barang --</option>
+          </select>
+        </div>
+        <div>
+          <label for="borrowQuantity" class="block mb-1">Jumlah Peminjaman</label>
+          <input type="number" id="borrowQuantity" min="1" required />
+        </div>
+        <button type="submit" class="btn-primary">Pinjam</button>
+      </form>
+      <p id="borrowMsg" class="borrow-msg"></p>
+    </section>
+  </main>
+
+  <script>
+    const borrowForm = document.getElementById('borrowForm');
+    const borrowerNameInput = document.getElementById('borrowerName');
+    const borrowItemSelect = document.getElementById('borrowItem');
+    const borrowQuantityInput = document.getElementById('borrowQuantity');
+    const borrowMsg = document.getElementById('borrowMsg');
+    const availableItemsBody = document.getElementById('availableItemsBody');
+
+    // Fetch available items and populate table and select
+    async function fetchAvailableItems() {
+      try {
+        const res = await fetch('/logistics');
+        if (!res.ok) {
+          borrowMsg.textContent = 'Gagal memuat data alat.';
+          borrowMsg.className = 'borrow-msg error';
+          return;
+        }
+        const items = await res.json();
+        availableItemsBody.innerHTML = '';
+        borrowItemSelect.innerHTML = '<option value="">-- Pilih Barang --</option>';
+        items.forEach(item => {
+          if (item.quantity > 0) {
+            // Populate table
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${item.item_name}</td>
+              <td>${item.quantity}</td>
+              <td>${item.description || ''}</td>
+            `;
+            availableItemsBody.appendChild(tr);
+            // Populate select
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = `${item.item_name} (Available: ${item.quantity})`;
+            borrowItemSelect.appendChild(option);
+          }
+        });
+      } catch (err) {
+        borrowMsg.textContent = 'Terjadi kesalahan server.';
+        borrowMsg.className = 'borrow-msg error';
+      }
+    }
+
+    // Handle borrow form submit
+    borrowForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      borrowMsg.textContent = '';
+      const item_id = borrowItemSelect.value;
+      const borrower_name = borrowerNameInput.value.trim();
+      const quantity = parseInt(borrowQuantityInput.value);
+      if (!item_id || !borrower_name || !quantity || quantity < 1) {
+        borrowMsg.textContent = 'Semua field harus diisi dengan benar.';
+        borrowMsg.className = 'borrow-msg error';
+        return;
+      }
+      try {
+        const res = await fetch('/borrow', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ item_id, borrower_name, quantity })
+        });
+        const result = await res.json();
+        if (res.ok) {
+          borrowMsg.textContent = 'Peminjaman berhasil dicatat.';
+          borrowMsg.className = 'borrow-msg success';
+          borrowForm.reset();
+          fetchAvailableItems();
+        } else {
+          borrowMsg.textContent = result.message || 'Gagal memproses peminjaman.';
+          borrowMsg.className = 'borrow-msg error';
+        }
+      } catch (err) {
+        borrowMsg.textContent = 'Terjadi kesalahan server.';
+        borrowMsg.className = 'borrow-msg error';
+      }
+    });
+
+    // Initial fetch
+    fetchAvailableItems();
+  </script>
+</body>
+</html>
