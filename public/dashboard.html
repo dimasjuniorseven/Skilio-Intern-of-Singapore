@@ -90,7 +90,7 @@
             <th class="py-2 px-4 text-left">Item Name</th>
             <th class="py-2 px-4 text-left">Quantity</th>
             <th class="py-2 px-4 text-left">Description</th>
-            <th class="py-2 px-4 text-left">Actions</th>
+            
           </tr>
         </thead>
         <tbody id="itemsTableBody">
@@ -256,100 +256,15 @@
 =======
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sistem Logistik Terpadu MAPALA Universitas Respati Yogyakarta</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(135deg, #1e3a8a, #2563eb);
-      color: #f9fafb;
-      font-family: 'Inter', sans-serif;
-    }
-    header {
-      background-color: rgba(31, 41, 55, 0.85);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
-    main {
-      max-width: 900px;
-      margin: 2rem auto;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-    h1, h2 {
-      color: #e0e7ff;
-    }
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 0.75rem;
-    }
-    th {
-      text-align: left;
-      padding: 0.75rem 1rem;
-      background-color: rgba(31, 41, 55, 0.8);
-      border-radius: 8px;
-      color: #c7d2fe;
-    }
-    td {
-      background-color: rgba(255, 255, 255, 0.15);
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      vertical-align: middle;
-    }
-    button {
-      transition: background-color 0.3s ease;
-    }
-    .btn-primary {
-      background-color: #2563eb;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.5);
-    }
-    .btn-primary:hover {
-      background-color: #1e40af;
-      box-shadow: 0 6px 12px rgba(30, 64, 175, 0.7);
-    }
-    .btn-secondary {
-      background-color: transparent;
-      border: 2px solid #c7d2fe;
-      color: #c7d2fe;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-    }
-    .btn-secondary:hover {
-      background-color: #c7d2fe;
-      color: #1e3a8a;
-    }
-    .actions button {
-      margin-right: 0.5rem;
-    }
-    input, textarea {
-      background-color: rgba(255, 255, 255, 0.2);
-      border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      color: #f9fafb;
-      font-size: 1rem;
-      width: 100%;
-      box-sizing: border-box;
-      transition: background-color 0.3s ease;
-    }
-    input:focus, textarea:focus {
-      background-color: rgba(255, 255, 255, 0.35);
-      outline: none;
-      box-shadow: 0 0 8px #2563eb;
-    }
-  </style>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sistem Logistik Terpadu MAPALA Universitas Respati Yogyakarta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 <body>
   <header class="p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold">Sistem Logistik Terpadu MAPALA Universitas Respati Yogyakarta</h1>
@@ -360,26 +275,26 @@
   </header>
 
   <main>
-    <section class="mb-6">
-      <h2 class="text-xl font-semibold mb-4">Tambah / Ubah Data Logistik</h2>
-      <form id="itemForm" class="space-y-4">
-        <input type="hidden" id="itemId" />
-        <div>
-          <label for="itemName" class="block mb-1">Nama Barang</label>
-          <input type="text" id="itemName" required />
-        </div>
-        <div>
-          <label for="quantity" class="block mb-1">Jumlah</label>
-          <input type="number" id="quantity" required min="0" />
-        </div>
-        <div>
-          <label for="description" class="block mb-1">Deskripsi</label>
-          <textarea id="description" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn-primary">Simpan</button>
-        <button type="button" id="cancelBtn" class="btn-secondary">Batal</button>
-      </form>
-    </section>
+      <section class="mb-6" ${isGuest ? 'hidden' : ''}>
+        <h2 class="text-xl font-semibold mb-4">Tambah / Ubah Data Logistik</h2>
+        <form id="itemForm" class="space-y-4">
+          <input type="hidden" id="itemId" />
+          <div>
+            <label for="itemName" class="block mb-1">Nama Barang</label>
+            <input type="text" id="itemName" required />
+          </div>
+          <div>
+            <label for="quantity" class="block mb-1">Jumlah</label>
+            <input type="number" id="quantity" required min="0" />
+          </div>
+          <div>
+            <label for="description" class="block mb-1">Deskripsi</label>
+            <textarea id="description" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Simpan</button>
+          <button type="button" id="cancelBtn" class="btn-secondary">Batal</button>
+        </form>
+      </section>
 
     <section>
       <h2 class="text-xl font-semibold mb-4">Data Logistik</h2>
@@ -389,7 +304,6 @@
             <th>Nama Barang</th>
             <th>Jumlah</th>
             <th>Deskripsi</th>
-            <th>Aksi</th>
           </tr>
         </thead>
         <tbody id="itemsTableBody">
@@ -397,6 +311,11 @@
         </tbody>
       </table>
     </section>
+    ${isGuest ? `
+    <section class="mt-6">
+      <a href="borrow.html" class="btn-primary">Form Peminjaman Alat</a>
+    </section>
+    ` : ''}
   </main>
 
   <script>
@@ -408,6 +327,13 @@
     const itemsTableBody = document.getElementById('itemsTableBody');
     const logoutBtn = document.getElementById('logoutBtn');
     const cancelBtn = document.getElementById('cancelBtn');
+
+    // Borrow form elements
+    const borrowForm = document.getElementById('borrowForm');
+    const borrowerNameInput = document.getElementById('borrowerName');
+    const borrowItemSelect = document.getElementById('borrowItem');
+    const borrowQuantityInput = document.getElementById('borrowQuantity');
+    const borrowMsg = document.getElementById('borrowMsg');
 
     // Check if guest mode
     const urlParams = new URLSearchParams(window.location.search);
@@ -423,6 +349,7 @@
         }
         const items = await res.json();
         itemsTableBody.innerHTML = '';
+        borrowItemSelect.innerHTML = '<option value="">-- Pilih Barang --</option>';
         items.forEach(item => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
@@ -437,12 +364,20 @@
             </td>
           `;
           itemsTableBody.appendChild(tr);
+          if (isGuest && item.quantity > 0) {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = `${item.item_name} (Available: ${item.quantity})`;
+            borrowItemSelect.appendChild(option);
+          }
         });
         if (!isGuest) {
           attachEventListeners();
           itemForm.style.display = 'block';
+          if (borrowForm) borrowForm.style.display = 'none';
         } else {
           itemForm.style.display = 'none';
+          if (borrowForm) borrowForm.style.display = 'block';
         }
       } catch (err) {
         console.error('Error fetching items', err);
@@ -547,6 +482,42 @@
       e.preventDefault();
       clearForm();
     });
+
+    // Borrow form submit
+    if (borrowForm) {
+      borrowForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        borrowMsg.textContent = '';
+        const item_id = borrowItemSelect.value;
+        const borrower_name = borrowerNameInput.value.trim();
+        const quantity = parseInt(borrowQuantityInput.value);
+        if (!item_id || !borrower_name || !quantity || quantity < 1) {
+          borrowMsg.textContent = 'Semua field harus diisi dengan benar.';
+          borrowMsg.className = 'text-red-500 mt-2';
+          return;
+        }
+        try {
+          const res = await fetch('/borrow', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ item_id, borrower_name, quantity })
+          });
+          const result = await res.json();
+          if (res.ok) {
+            borrowMsg.textContent = 'Peminjaman berhasil dicatat.';
+            borrowMsg.className = 'text-green-500 mt-2';
+            borrowForm.reset();
+            fetchItems();
+          } else {
+            borrowMsg.textContent = result.message || 'Gagal memproses peminjaman.';
+            borrowMsg.className = 'text-red-500 mt-2';
+          }
+        } catch (err) {
+          borrowMsg.textContent = 'Terjadi kesalahan server.';
+          borrowMsg.className = 'text-red-500 mt-2';
+        }
+      });
+    }
 
     // Logout
     logoutBtn.addEventListener('click', async () => {
