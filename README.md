@@ -71,4 +71,3 @@ mapala-logistics-crud/
 ```
 
 Feel free to contribute to this project or raise any issues.
-```
