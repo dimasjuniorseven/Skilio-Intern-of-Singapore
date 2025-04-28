@@ -1,9 +1,3 @@
-
-Built by https://www.blackbox.ai
-
----
-
-```markdown
 # Mapala Logistics CRUD
 
 ## Project Overview
