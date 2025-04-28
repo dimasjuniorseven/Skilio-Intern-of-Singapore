@@ -3,107 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sistem Logistik Terpadu MAPALA Universitas Respati Yogyakarta</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <title>Sistem Logistik Terpadu - MAPALA URY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(135deg, #1e3a8a, #2563eb);
-      color: black;
-      transition: background-color 0.3s ease, color 0.3s ease;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e3a8a',
+            secondary: '#2563eb',
+          }
+        }
+      }
     }
-    header {
-      background-color: #1e40af;
-    }
-    main {
-      background-color: #1e40af;
-      border-radius: 0.5rem;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-      padding: 2rem;
-      max-width: 900px;
-      margin: 2rem auto;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 0.75rem;
-    }
-    th {
-      text-align: left;
-      padding: 0.75rem 1rem;
-      font-weight: 600;
-      color: #e0e7ff;
-    }
-    td {
-      background-color: #1e3a8a;
-      padding: 0.75rem 1rem;
-      border: none;
-      border-radius: 0.375rem;
-    }
-  </style>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MAPALA Logistics - Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  </script>
 </head>
-<body class="bg-gray-100 font-sans">
-  <header class="bg-blue-600 text-white p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">MAPALA Logistics Dashboard</h1>
-    <button id="logoutBtn" title="Logout" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded flex items-center gap-2 transition duration-300 ease-in-out">
-      <i class="fas fa-sign-out-alt"></i>
-      <span class="sr-only">Logout</span>
+<body class="bg-gradient-to-tr from-primary to-secondary min-h-screen font-inter text-gray-800">
+
+  <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
+    <h1 class="text-2xl font-bold text-primary">MAPALA Logistics Dashboard</h1>
+    <button id="logoutBtn" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition">
+      <i class="fas fa-sign-out-alt"></i><span>Logout</span>
     </button>
   </header>
 
-  <main class="p-6 max-w-4xl mx-auto">
-    <section class="mb-6">
-      <h2 class="text-lg font-semibold mb-2">Add / Edit Logistics Item</h2>
-      <form id="itemForm" class="bg-white p-4 rounded shadow space-y-4">
+  <main class="container mx-auto p-6 mt-6">
+    <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-primary">Add / Edit Logistics Item</h2>
+      <form id="itemForm" class="space-y-5">
         <input type="hidden" id="itemId" />
         <div>
-          <label for="itemName" class="block text-gray-700">Item Name</label>
-          <input type="text" id="itemName" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label for="itemName" class="block text-gray-700 font-medium mb-1">Item Name</label>
+          <input type="text" id="itemName" required class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-secondary" />
         </div>
         <div>
-          <label for="quantity" class="block text-gray-700">Quantity</label>
-          <input type="number" id="quantity" required min="0" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label for="quantity" class="block text-gray-700 font-medium mb-1">Quantity</label>
+          <input type="number" id="quantity" required min="0" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-secondary" />
         </div>
         <div>
-          <label for="description" class="block text-gray-700">Description</label>
-          <textarea id="description" rows="3" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <label for="description" class="block text-gray-700 font-medium mb-1">Description</label>
+          <textarea id="description" rows="3" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-secondary"></textarea>
         </div>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Save</button>
-        <button type="button" id="cancelBtn" class="ml-2 px-4 py-2 rounded border border-gray-300 hover:bg-gray-100">Cancel</button>
+        <div class="flex items-center gap-4">
+          <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-md transition">Save</button>
+          <button type="button" id="cancelBtn" class="text-gray-600 hover:text-gray-900 border border-gray-300 py-2 px-6 rounded-md transition">Cancel</button>
+        </div>
       </form>
     </section>
 
-    <section>
-      <h2 class="text-lg font-semibold mb-2">Logistics Items</h2>
-      <table class="min-w-full bg-white rounded shadow">
-        <thead>
-          <tr class="bg-gray-200 text-gray-700">
-            <th class="py-2 px-4 text-left">Item Name</th>
-            <th class="py-2 px-4 text-left">Quantity</th>
-            <th class="py-2 px-4 text-left">Description</th>
-            
-          </tr>
-        </thead>
-        <tbody id="itemsTableBody">
-          <!-- Items will be populated here -->
-        </tbody>
-      </table>
+    <section class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold mb-4 text-primary">Logistics Items</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+            <tr>
+              <th class="px-6 py-3 text-left">Item Name</th>
+              <th class="px-6 py-3 text-left">Quantity</th>
+              <th class="px-6 py-3 text-left">Description</th>
+              <th class="px-6 py-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="itemsTableBody" class="divide-y divide-gray-200">
+            <!-- Items will be populated here -->
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
   <script>
     const itemForm = document.getElementById('itemForm');
     const itemIdInput = document.getElementById('itemId');
@@ -114,23 +83,19 @@
     const logoutBtn = document.getElementById('logoutBtn');
     const cancelBtn = document.getElementById('cancelBtn');
 
-    // Fetch and display logistics items
     async function fetchItems() {
       try {
         const res = await fetch('/logistics', { credentials: 'include' });
-        if (res.status === 401) {
-          window.location.href = '/';
-          return;
-        }
+        if (res.status === 401) return window.location.href = '/';
         const items = await res.json();
         itemsTableBody.innerHTML = '';
         items.forEach(item => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td class="border px-4 py-2">${item.item_name}</td>
-            <td class="border px-4 py-2">${item.quantity}</td>
-            <td class="border px-4 py-2">${item.description || ''}</td>
-            <td class="border px-4 py-2 space-x-2">
+            <td class="px-6 py-4 whitespace-nowrap">${item.item_name}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${item.quantity}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${item.description || ''}</td>
+            <td class="px-6 py-4 text-center whitespace-nowrap space-x-2">
               <button class="editBtn text-blue-600 hover:underline" data-id="${item.id}">Edit</button>
               <button class="deleteBtn text-red-600 hover:underline" data-id="${item.id}">Delete</button>
             </td>
@@ -143,23 +108,15 @@
       }
     }
 
-    // Attach event listeners to edit and delete buttons
     function attachEventListeners() {
       document.querySelectorAll('.editBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-id');
-          editItem(id);
-        });
+        btn.addEventListener('click', () => editItem(btn.getAttribute('data-id')));
       });
       document.querySelectorAll('.deleteBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-id');
-          deleteItem(id);
-        });
+        btn.addEventListener('click', () => deleteItem(btn.getAttribute('data-id')));
       });
     }
 
-    // Edit item
     async function editItem(id) {
       try {
         const res = await fetch('/logistics');
@@ -176,22 +133,17 @@
       }
     }
 
-    // Delete item
     async function deleteItem(id) {
       if (!confirm('Are you sure you want to delete this item?')) return;
       try {
         const res = await fetch('/logistics/' + id, { method: 'DELETE' });
-        if (res.ok) {
-          fetchItems();
-        } else {
-          alert('Failed to delete item');
-        }
+        if (res.ok) fetchItems();
+        else alert('Failed to delete item');
       } catch (err) {
         alert('Server error');
       }
     }
 
-    // Clear form
     function clearForm() {
       itemIdInput.value = '';
       itemNameInput.value = '';
@@ -199,7 +151,6 @@
       descriptionInput.value = '';
     }
 
-    // Handle form submit
     itemForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const id = itemIdInput.value;
@@ -236,307 +187,17 @@
       }
     });
 
-    // Cancel button clears form
-    cancelBtn.addEventListener('click', (e) => {
-      e.preventDefault();
+    cancelBtn.addEventListener('click', () => {
       clearForm();
     });
 
-    // Logout
     logoutBtn.addEventListener('click', async () => {
       try {
         await fetch('/logout', { method: 'POST' });
-      } catch (err) {
-        // ignore
-      }
+      } catch (err) {}
       window.location.href = '/';
     });
 
-    // Initial fetch
-    fetchItems();
-  </script>
-</body>
-</html>
-=======
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sistem Logistik Terpadu MAPALA Universitas Respati Yogyakarta !</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-<body>
-  <header class="p-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold">Sistem Logistik Terpadu MAPALA Universitas Respati Yogyakarta</h1>
-    <button id="logoutBtn" title="Logout" class="btn-primary flex items-center gap-2">
-      <i class="fas fa-sign-out-alt"></i>
-      <span class="sr-only">Logout</span>
-    </button>
-  </header>
-
-  <main>
-      ${!isGuest ? `
-      <section class="mb-6 white-bg">
-        <h2 class="text-xl font-semibold mb-4">Tambah / Ubah Data Logistik</h2>
-        <form id="itemForm" class="space-y-4">
-          <input type="hidden" id="itemId" />
-          <div>
-            <label for="itemName" class="block mb-1">Nama Barang</label>
-            <input type="text" id="itemName" required />
-          </div>
-          <div>
-            <label for="quantity" class="block mb-1">Jumlah</label>
-            <input type="number" id="quantity" required min="0" />
-          </div>
-          <div>
-            <label for="description" class="block mb-1">Deskripsi</label>
-            <textarea id="description" rows="3"></textarea>
-          </div>
-          <button type="submit" class="btn-primary">Simpan</button>
-          <button type="button" id="cancelBtn" class="btn-secondary">Batal</button>
-        </form>
-      </section>
-      ` : ''}
-
-    <section class="white-bg">
-      <h2 class="text-xl font-semibold mb-4">Data Logistik</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Nama Barang</th>
-            <th>Jumlah</th>
-            <th>Deskripsi</th>
-            ${!isGuest ? '<th>Aksi</th>' : ''}
-          </tr>
-        </thead>
-        <tbody id="itemsTableBody">
-          <!-- Items will be populated here -->
-        </tbody>
-      </table>
-    </section>
-    ${isGuest ? `
-    <section class="mt-6">
-      <a href="borrow.html" class="btn-primary">Form Peminjaman Alat</a>
-    </section>
-    ` : ''}
-  </main>
-
-  <script>
-    const itemForm = document.getElementById('itemForm');
-    const itemIdInput = document.getElementById('itemId');
-    const itemNameInput = document.getElementById('itemName');
-    const quantityInput = document.getElementById('quantity');
-    const descriptionInput = document.getElementById('description');
-    const itemsTableBody = document.getElementById('itemsTableBody');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-
-    // Borrow form elements
-    const borrowForm = document.getElementById('borrowForm');
-    const borrowerNameInput = document.getElementById('borrowerName');
-    const borrowItemSelect = document.getElementById('borrowItem');
-    const borrowQuantityInput = document.getElementById('borrowQuantity');
-    const borrowMsg = document.getElementById('borrowMsg');
-
-    // Check if guest mode
-    const urlParams = new URLSearchParams(window.location.search);
-    const isGuest = urlParams.get('guest') === 'true';
-
-    // Fetch and display logistics items
-    async function fetchItems() {
-      try {
-        const res = await fetch('/logistics');
-        if (!res.ok) {
-          window.location.href = '/';
-          return;
-        }
-        const items = await res.json();
-        itemsTableBody.innerHTML = '';
-        borrowItemSelect.innerHTML = '<option value="">-- Pilih Barang --</option>';
-        items.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${item.item_name}</td>
-            <td>${item.quantity}</td>
-            <td>${item.description || ''}</td>
-            <td class="actions">
-              ${isGuest ? '' : `
-              <button class="editBtn btn-secondary" data-id="${item.id}">Ubah</button>
-              <button class="deleteBtn btn-secondary" data-id="${item.id}">Hapus</button>
-              `}
-            </td>
-          `;
-          itemsTableBody.appendChild(tr);
-          if (isGuest && item.quantity > 0) {
-            const option = document.createElement('option');
-            option.value = item.id;
-            option.textContent = `${item.item_name} (Available: ${item.quantity})`;
-            borrowItemSelect.appendChild(option);
-          }
-        });
-        if (!isGuest) {
-          attachEventListeners();
-          itemForm.style.display = 'block';
-          if (borrowForm) borrowForm.style.display = 'none';
-        } else {
-          itemForm.style.display = 'none';
-          if (borrowForm) borrowForm.style.display = 'block';
-        }
-      } catch (err) {
-        console.error('Error fetching items', err);
-      }
-    }
-
-    // Attach event listeners to edit and delete buttons
-    function attachEventListeners() {
-      document.querySelectorAll('.editBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-id');
-          editItem(id);
-        });
-      });
-      document.querySelectorAll('.deleteBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-id');
-          deleteItem(id);
-        });
-      });
-    }
-
-    // Edit item
-    async function editItem(id) {
-      try {
-        const res = await fetch('/logistics');
-        const items = await res.json();
-        const item = items.find(i => i.id == id);
-        if (item) {
-          itemIdInput.value = item.id;
-          itemNameInput.value = item.item_name;
-          quantityInput.value = item.quantity;
-          descriptionInput.value = item.description || '';
-        }
-      } catch (err) {
-        console.error('Error loading item for edit', err);
-      }
-    }
-
-    // Delete item
-    async function deleteItem(id) {
-      if (!confirm('Apakah Anda yakin ingin menghapus data ini?')) return;
-      try {
-        const res = await fetch('/logistics/' + id, { method: 'DELETE' });
-        if (res.ok) {
-          fetchItems();
-        } else {
-          alert('Gagal menghapus data');
-        }
-      } catch (err) {
-        alert('Terjadi kesalahan server');
-      }
-    }
-
-    // Clear form
-    function clearForm() {
-      itemIdInput.value = '';
-      itemNameInput.value = '';
-      quantityInput.value = '';
-      descriptionInput.value = '';
-    }
-
-    // Handle form submit
-    itemForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const id = itemIdInput.value;
-      const data = {
-        item_name: itemNameInput.value,
-        quantity: parseInt(quantityInput.value),
-        description: descriptionInput.value
-      };
-      try {
-        let res;
-        if (id) {
-          res = await fetch('/logistics/' + id, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-        } else {
-          res = await fetch('/logistics', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-        }
-        if (res.ok) {
-          clearForm();
-          fetchItems();
-        } else if (res.status === 401) {
-          window.location.href = '/';
-        } else {
-          alert('Gagal menyimpan data');
-        }
-      } catch (err) {
-        alert('Terjadi kesalahan server');
-      }
-    });
-
-    // Cancel button clears form
-    cancelBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      clearForm();
-    });
-
-    // Borrow form submit
-    if (borrowForm) {
-      borrowForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        borrowMsg.textContent = '';
-        const item_id = borrowItemSelect.value;
-        const borrower_name = borrowerNameInput.value.trim();
-        const quantity = parseInt(borrowQuantityInput.value);
-        if (!item_id || !borrower_name || !quantity || quantity < 1) {
-          borrowMsg.textContent = 'Semua field harus diisi dengan benar.';
-          borrowMsg.className = 'text-red-500 mt-2';
-          return;
-        }
-        try {
-          const res = await fetch('/borrow', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ item_id, borrower_name, quantity })
-          });
-          const result = await res.json();
-          if (res.ok) {
-            borrowMsg.textContent = 'Peminjaman berhasil dicatat.';
-            borrowMsg.className = 'text-green-500 mt-2';
-            borrowForm.reset();
-            fetchItems();
-          } else {
-            borrowMsg.textContent = result.message || 'Gagal memproses peminjaman.';
-            borrowMsg.className = 'text-red-500 mt-2';
-          }
-        } catch (err) {
-          borrowMsg.textContent = 'Terjadi kesalahan server.';
-          borrowMsg.className = 'text-red-500 mt-2';
-        }
-      });
-    }
-
-    // Logout
-    logoutBtn.addEventListener('click', async () => {
-      try {
-        await fetch('/logout', { method: 'POST' });
-      } catch (err) {
-        // ignore
-      }
-      window.location.href = '/';
-    });
-
-    // Initial fetch
     fetchItems();
   </script>
 </body>

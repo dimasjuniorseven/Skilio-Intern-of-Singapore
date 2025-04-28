@@ -4,52 +4,118 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Form Peminjaman Alat - Sistem Logistik MAPALA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #c3e0e5 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4f46e5;
+      color: white;
+    }
+    .btn-primary {
+      background-color: #4f46e5;
+      padding: 8px 16px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #4338ca;
+    }
+    .borrow-msg {
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    .borrow-msg.success {
+      color: #16a34a;
+    }
+    .borrow-msg.error {
+      color: #dc2626;
+    }
+  </style>
 </head>
-<body>
-  <header class="p-4 flex justify-between items-center bg-gray-900 text-white">
+<body class="flex flex-col">
+
+  <header class="p-6 flex justify-between items-center bg-indigo-700 text-white shadow-md">
     <h1 class="text-2xl font-bold">Form Peminjaman Alat - Sistem Logistik MAPALA</h1>
     <a href="dashboard.html?guest=true" class="btn-primary">Kembali ke Dashboard</a>
   </header>
 
-  <main>
-    <section class="mb-6">
-      <h2 class="text-xl font-semibold mb-4">Data Alat Tersedia</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Nama Barang</th>
-            <th>Jumlah Tersedia</th>
-            <th>Deskripsi</th>
-          </tr>
-        </thead>
-        <tbody id="availableItemsBody">
-          <!-- Available items will be populated here -->
-        </tbody>
-      </table>
+  <main class="flex-1 p-6">
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-6 text-indigo-700">Data Alat Tersedia</h2>
+      <div class="overflow-x-auto shadow rounded-lg bg-white p-4">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama Barang</th>
+              <th>Jumlah Tersedia</th>
+              <th>Deskripsi</th>
+            </tr>
+          </thead>
+          <tbody id="availableItemsBody">
+            <!-- Available items will be populated here -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section class="borrow-section">
-      <h2 class="text-xl font-semibold mb-4">Form Peminjaman Alat</h2>
-      <form id="borrowForm" class="space-y-4">
+      <h2 class="text-2xl font-semibold mb-6 text-indigo-700">Form Peminjaman Alat</h2>
+      <form id="borrowForm" class="space-y-6 bg-white shadow rounded-lg p-6">
         <div>
-          <label for="borrowerName" class="block mb-1">Nama Peminjam</label>
-          <input type="text" id="borrowerName" required />
+          <label for="borrowerName" class="block mb-2 font-semibold text-gray-700">Nama Peminjam</label>
+          <input type="text" id="borrowerName" required class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
         </div>
         <div>
-          <label for="borrowItem" class="block mb-1">Pilih Barang</label>
-          <select id="borrowItem" required>
+          <label for="borrowItem" class="block mb-2 font-semibold text-gray-700">Pilih Barang</label>
+          <select id="borrowItem" required class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <option value="">-- Pilih Barang --</option>
           </select>
         </div>
         <div>
-          <label for="borrowQuantity" class="block mb-1">Jumlah Peminjaman</label>
-          <input type="number" id="borrowQuantity" min="1" required />
+          <label for="borrowQuantity" class="block mb-2 font-semibold text-gray-700">Jumlah Peminjaman</label>
+          <input type="number" id="borrowQuantity" min="1" required class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
         </div>
-        <button type="submit" class="btn-primary">Pinjam</button>
+        <div>
+          <label for="borrowDate" class="block mb-2 font-semibold text-gray-700">Tanggal Peminjaman</label>
+          <input type="date" id="borrowDate" required class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div>
+          <label for="returnDate" class="block mb-2 font-semibold text-gray-700">Tanggal Pengembalian</label>
+          <input type="date" id="returnDate" required class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div>
+          <label for="guaranteeType" class="block mb-2 font-semibold text-gray-700">Jenis Jaminan</label>
+          <select id="guaranteeType" required class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="">-- Pilih Jaminan --</option>
+            <option value="Tidak Ada">Tidak Ada</option>
+            <option value="KTP">KTP</option>
+            <option value="SIM">SIM</option>
+            <option value="KTM">KTM</option>
+            <option value="PASPOR">PASPOR</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary w-full text-center">Unduh</button>
       </form>
       <p id="borrowMsg" class="borrow-msg"></p>
     </section>
@@ -60,10 +126,12 @@
     const borrowerNameInput = document.getElementById('borrowerName');
     const borrowItemSelect = document.getElementById('borrowItem');
     const borrowQuantityInput = document.getElementById('borrowQuantity');
+    const borrowDateInput = document.getElementById('borrowDate');
+    const returnDateInput = document.getElementById('returnDate');
+    const guaranteeTypeSelect = document.getElementById('guaranteeType');
     const borrowMsg = document.getElementById('borrowMsg');
     const availableItemsBody = document.getElementById('availableItemsBody');
 
-    // Fetch available items and populate table and select
     async function fetchAvailableItems() {
       try {
         const res = await fetch('/logistics');
@@ -77,7 +145,6 @@
         borrowItemSelect.innerHTML = '<option value="">-- Pilih Barang --</option>';
         items.forEach(item => {
           if (item.quantity > 0) {
-            // Populate table
             const tr = document.createElement('tr');
             tr.innerHTML = `
               <td>${item.item_name}</td>
@@ -85,10 +152,10 @@
               <td>${item.description || ''}</td>
             `;
             availableItemsBody.appendChild(tr);
-            // Populate select
+
             const option = document.createElement('option');
-            option.value = item.id;
-            option.textContent = `${item.item_name} (Available: ${item.quantity})`;
+            option.value = item.item_name;
+            option.textContent = `${item.item_name} (Tersedia: ${item.quantity})`;
             borrowItemSelect.appendChild(option);
           }
         });
@@ -98,42 +165,43 @@
       }
     }
 
-    // Handle borrow form submit
-    borrowForm.addEventListener('submit', async (e) => {
+    borrowForm.addEventListener('submit', (e) => {
       e.preventDefault();
       borrowMsg.textContent = '';
-      const item_id = borrowItemSelect.value;
-      const borrower_name = borrowerNameInput.value.trim();
-      const quantity = parseInt(borrowQuantityInput.value);
-      if (!item_id || !borrower_name || !quantity || quantity < 1) {
-        borrowMsg.textContent = 'Semua field harus diisi dengan benar.';
+
+      const borrowerName = borrowerNameInput.value.trim();
+      const borrowItem = borrowItemSelect.value;
+      const quantity = borrowQuantityInput.value;
+      const borrowDate = borrowDateInput.value;
+      const returnDate = returnDateInput.value;
+      const guaranteeType = guaranteeTypeSelect.value;
+
+      if (!borrowerName || !borrowItem || !quantity || !borrowDate || !returnDate || !guaranteeType) {
+        borrowMsg.textContent = 'Semua field harus diisi.';
         borrowMsg.className = 'borrow-msg error';
         return;
       }
-      try {
-        const res = await fetch('/borrow', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ item_id, borrower_name, quantity })
-        });
-        const result = await res.json();
-        if (res.ok) {
-          borrowMsg.textContent = 'Peminjaman berhasil dicatat.';
-          borrowMsg.className = 'borrow-msg success';
-          borrowForm.reset();
-          fetchAvailableItems();
-        } else {
-          borrowMsg.textContent = result.message || 'Gagal memproses peminjaman.';
-          borrowMsg.className = 'borrow-msg error';
-        }
-      } catch (err) {
-        borrowMsg.textContent = 'Terjadi kesalahan server.';
-        borrowMsg.className = 'borrow-msg error';
-      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text('Formulir Peminjaman Alat MAPALA', 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Nama Peminjam: ${borrowerName}`, 20, 40);
+      doc.text(`Nama Barang: ${borrowItem}`, 20, 50);
+      doc.text(`Jumlah Peminjaman: ${quantity}`, 20, 60);
+      doc.text(`Tanggal Peminjaman: ${borrowDate}`, 20, 70);
+      doc.text(`Tanggal Pengembalian: ${returnDate}`, 20, 80);
+      doc.text(`Jenis Jaminan: ${guaranteeType}`, 20, 90);
+
+      doc.save(`Form-Peminjaman-${borrowerName}.pdf`);
+      borrowMsg.textContent = 'PDF berhasil diunduh.';
+      borrowMsg.className = 'borrow-msg success';
+      borrowForm.reset();
     });
 
-    // Initial fetch
     fetchAvailableItems();
   </script>
+
 </body>
 </html>
