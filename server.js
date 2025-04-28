@@ -10,11 +10,29 @@ const PORT = 8000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const cors = require('cors');
+
+app.use(cors({
+  origin: true,
+  credentials: true,
+}));
+
 app.use(session({
   secret: 'mapala_secret_key',
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+  }
 }));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ message: 'Internal server error' });
+});
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
