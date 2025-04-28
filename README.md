@@ -61,7 +61,7 @@ npm install
 The project is organized as follows:
 
 ```
-mapala-logistics-crud/
+Skilio-Intern-of-Singapore/
 │
 ├── node_modules/           # Node.js modules (dependencies)
 ├── public/                 # Static files (HTML, CSS, JS and Photos)
